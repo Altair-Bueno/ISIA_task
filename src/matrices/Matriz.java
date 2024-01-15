@@ -46,7 +46,30 @@ public class Matriz {
             } 
         } 
         return matrizResultante; 
-    } 
+    }
+
+
+    public static Matriz multiplicarDosMatrices(Matriz a, Matriz b) throws DimensionesIncompatibles {
+        if(a.getDimension().height != b.getDimension().width)
+            throw new DimensionesIncompatibles("La altura de la matriz A y el ancho de la matriz B deben ser del mismo tamaño");
+
+        var widthA = a.getDimension().width;
+        var heightA = a.getDimension().height;
+        var heightB = b.getDimension().height;
+
+        var result = new Matriz(heightB, widthA, false);
+
+        for (var row = 0; row < widthA; row++) {
+            for (var col = 0; col < heightB; col++) {
+                var temp = 0;
+                for (int i = 0; i < heightA; i++) {
+                    temp += a.datos[row][i] * b.datos[i][col];
+                }
+                result.datos[row][col] = temp;
+            }
+        }
+        return result;
+    }
 
     @Override
     public String toString(){
